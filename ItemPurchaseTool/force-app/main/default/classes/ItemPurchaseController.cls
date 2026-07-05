@@ -1,5 +1,4 @@
 public with sharing class ItemPurchaseController {
-   public with sharing class ItemPurchaseController {
 
     // Fetch Items with Filters
     @AuraEnabled(cacheable=true)
@@ -83,11 +82,32 @@ public with sharing class ItemPurchaseController {
         return newPurchase.Id;
     }
 
+    @AuraEnabled
+    public static Item__c createNewItem(String name, String description, String typeVal, String familyVal, Decimal price, Decimal quantity) {
+        if (!isUserManager()) {
+            throw new AuraHandledException('Unauthorized: Only managers can create items.');
+        }
+
+        String imageUrl = UnsplashService.getItemImageUrl(name);
+
+        Item__c newItem = new Item__c(
+            Name = name,
+            Description__c = description,
+            Type__c = typeVal,
+            Family__c = familyVal,
+            Price__c = price,
+            AvailableQuantity__c = quantity,
+            Image__c = imageUrl
+        );
+
+        insert newItem;
+        return newItem;
+    }
+
     // Wrapper class to match the JSON structure coming from LWC
     public class CartWrapper {
         public Id itemId;
         public Decimal quantity;
         public Decimal unitPrice;
     }
-}
 }
