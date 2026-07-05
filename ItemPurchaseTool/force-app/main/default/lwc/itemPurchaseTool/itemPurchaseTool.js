@@ -163,4 +163,14 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
     showToast(title, message, variant) {
         this.dispatchEvent(new ShowToastEvent({ title, message, variant }));
     }
+
+    openDetailsModal(event) {
+        this.selectedItemId = event.target.dataset.id;
+        this.showDetailsModal = true;
+    }
+    
+    closeDetailsModal() {
+        this.showDetailsModal = false;
+        this.selectedItemId = '';
+    }
 }
