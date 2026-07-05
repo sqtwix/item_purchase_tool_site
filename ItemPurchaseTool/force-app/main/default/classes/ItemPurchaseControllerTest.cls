@@ -1,3 +1,4 @@
+@isTest
 public with sharing class ItemPurchaseControllerTest {
     // Mock data setup for testing (aka fixtures)
     @testSetup

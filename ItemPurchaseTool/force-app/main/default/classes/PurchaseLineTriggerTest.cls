@@ -1,3 +1,4 @@
+@isTest
 public with sharing class PurchaseLineTriggerTest {
     // Fixture setup for the test class
     @testSetup

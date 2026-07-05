@@ -1,16 +1,17 @@
 <template>
-    <lightning-card title="Item Purchase Tool" icon-name="custom:custom93">
-        <div slot="actions">
-            <template if:true={isManager}>
-                <lightning-button label="Create an Item" onclick={openNewItemModal} class="slds-m-right_small"></lightning-button>
-            </template>
-            <lightning-button label="Cart" icon-name="utility:cart" onclick={openCart} variant="brand"></lightning-button>
-        </div>
-
-        <div class="slds-p-around_medium">
-            <div class="slds-box slds-m-bottom_medium slds-theme_shade">
+    <div class="slds-theme_default slds-p-around_small" style="background: transparent;">
+        
+        <div class="slds-box slds-grid slds-grid_vertical-align-center slds-m-bottom_medium" style="background: white;">
+            
+            <div class="slds-col slds-size_1-of-5">
+                <template if:true={isManager}>
+                    <lightning-button label="Create Item" onclick={openNewItemModal}></lightning-button>
+                </template>
+            </div>
+            
+            <div class="slds-col slds-size_3-of-5">
                 <lightning-record-view-form record-id={recordId} object-api-name="Account">
-                    <div class="slds-grid slds-gutters">
+                    <div class="slds-grid slds-grid_align-center slds-gutters">
                         <div class="slds-col">
                             <lightning-output-field field-name="Name"></lightning-output-field>
                         </div>
@@ -23,44 +24,66 @@
                     </div>
                 </lightning-record-view-form>
             </div>
-
-            <div class="slds-grid slds-gutters slds-m-bottom_medium slds-align-bottom">
-                <div class="slds-col slds-size_1-of-4">
-                    <lightning-input type="search" label="Search Name/Desc" onchange={handleSearch}></lightning-input>
-                </div>
-                <div class="slds-col slds-size_1-of-4">
-                    <lightning-input label="Filter by Family" onchange={handleFamilyChange}></lightning-input>
-                </div>
-                <div class="slds-col slds-size_1-of-4">
-                    <lightning-input label="Filter by Type" onchange={handleTypeChange}></lightning-input>
-                </div>
-                <div class="slds-col slds-size_1-of-4">
-                    <div class="slds-text-heading_small slds-p-bottom_x-small"><b>{itemCount} items found</b></div>
-                </div>
-            </div>
-
-            <div class="slds-grid slds-wrap slds-gutters">
-                <template for:each={items} for:item="item">
-                    <div key={item.Id} class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
-                        <div class="slds-box slds-box_link slds-theme_default slds-text-align_center">
-                            <img src={item.Image__c} alt={item.Name} style="height: 150px; width: 100%; object-fit: cover; border-radius: 4px;" />
-                            
-                            <h3 class="slds-text-heading_medium slds-m-top_small"><b>{item.Name}</b></h3>
-                            <p class="slds-text-title">
-                                Price: <lightning-formatted-number value={item.Price__c} format-style="currency"></lightning-formatted-number>
-                            </p>
-                            <p class="slds-text-title slds-m-bottom_small">Available: {item.AvailableQuantity__c}</p>
-                            
-                            <div class="slds-grid slds-grid_align-spread">
-                                <lightning-button label="Details" data-id={item.Id} onclick={openDetailsModal}></lightning-button>
-                                <lightning-button label="Add" data-id={item.Id} variant="brand" onclick={addToCart}></lightning-button>
-                            </div>
-                        </div>
-                    </div>
-                </template>
+            
+            <div class="slds-col slds-size_1-of-5 slds-text-align_right">
+                <lightning-button label="Cart" icon-name="utility:cart" onclick={openCart} variant="brand"></lightning-button>
             </div>
         </div>
-    </lightning-card>
+
+        <div class="slds-grid slds-gutters">
+            
+            <div class="slds-col slds-size_3-of-4">
+                
+                <div class="slds-box slds-m-bottom_medium slds-p-around_x-small" style="background: white;">
+                    <lightning-input type="search" placeholder="SEARCH ITEMS..." onchange={handleSearch} variant="label-hidden"></lightning-input>
+                </div>
+
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <template for:each={items} for:item="item">
+                        <div key={item.Id} class="slds-col slds-size_1-of-2 slds-p-bottom_medium">
+                            <div class="slds-box slds-theme_default slds-text-align_center">
+                                
+                                <h3 class="slds-text-heading_small slds-m-bottom_small"><b>{item.Name}</b></h3>
+                                
+                                <p class="slds-text-body_small slds-m-bottom_x-small">{item.Description__c}</p>
+                                
+                                <img src={item.Image__c} alt={item.Name} style="height: 120px; width: 100%; object-fit: cover; border-radius: 4px; margin-bottom: 10px;" />
+                                
+                                <p class="slds-text-title_caps slds-text-color_success slds-m-bottom_small">
+                                    <lightning-formatted-number value={item.Price__c} format-style="currency"></lightning-formatted-number> 
+                                    | Stock: {item.AvailableQuantity__c}
+                                </p>
+                                
+                                <div class="slds-grid slds-grid_align-spread">
+                                    <lightning-button label="Details" data-id={item.Id} onclick={openDetailsModal}></lightning-button>
+                                    <lightning-button label="Add" data-id={item.Id} variant="brand-outline" onclick={addToCart}></lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="slds-col slds-size_1-of-4">
+                <div class="slds-box" style="background: #f4f6f9; min-height: 100%;">
+                    <h2 class="slds-text-heading_medium slds-m-bottom_medium"><b>FILTERS</b></h2>
+                    
+                    <div class="slds-m-bottom_medium">
+                        <lightning-input label="Type" placeholder="Enter Type..." onchange={handleTypeChange}></lightning-input>
+                        </div>
+
+                    <div class="slds-m-bottom_large">
+                        <lightning-input label="Family" placeholder="Enter Family..." onchange={handleFamilyChange}></lightning-input>
+                    </div>
+
+                    <div class="slds-text-title_caps slds-text-color_weak slds-m-top_large">
+                        Total Items: {itemCount}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 
     <template if:true={showCartModal}>
         <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
