@@ -1,5 +1,5 @@
 public with sharing class PurchaseLineTriggerTest {
-    // 1. Fixture setup for the test class
+    // Fixture setup for the test class
     @testSetup
     static void setupData() {
         // Create an Account
@@ -22,7 +22,7 @@ public with sharing class PurchaseLineTriggerTest {
         insert purchase;
     }
 
-    // 2. Test inserting new line items 
+    // Test inserting new line items 
     @isTest
     static void testInsertCalculatesTotals() {
         Purchase__c p = [SELECT Id FROM Purchase__c LIMIT 1];
@@ -46,7 +46,7 @@ public with sharing class PurchaseLineTriggerTest {
         System.assertEquals(400, updatedPurchase.GrandTotal__c, 'Grand total should calculate to 400.');
     }
 
-    // 3. Test deleting line items 
+    // Test deleting line items 
     @isTest
     static void testDeleteCalculatesTotals() {
         Purchase__c p = [SELECT Id FROM Purchase__c LIMIT 1];
@@ -68,7 +68,7 @@ public with sharing class PurchaseLineTriggerTest {
         System.assertNotEquals(null, updatedPurchase.Id, 'Purchase should still exist after deleting lines.');
     }
 
-    // 4. Test updating line items 
+    // Test updating line items 
     @isTest
     static void testUpdateCalculatesTotals() {
         Purchase__c p = [SELECT Id FROM Purchase__c LIMIT 1];
