@@ -1,5 +1,6 @@
 public with sharing class UnsplashService {
-    private static final String ACCESS_KEY = 'YOUR_UNSPLASH_ACCESS_KEY';
+    // Access key for Unsplash API
+    private static final String ACCESS_KEY = 'nreFjY6W16Ou1_5xAXD-ctLCBTa7ycHSCPj27c0SjcA';
 
     @AuraEnabled
     public static String getItemImageUrl(String searchTerm) {
