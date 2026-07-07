@@ -21,9 +21,10 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
     selectedFamily = '';
     selectedType = '';
 
-    // Modal toggles
     showCartModal = false;
     showNewItemModal = false;
+    showDetailsModal = false; 
+    selectedItemId = '';      
 
     // New Item Form Data
     newItemName = '';
